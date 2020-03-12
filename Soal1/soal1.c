@@ -11,7 +11,7 @@
 #include <ctype.h>
 
 
-
+// dari nama fungsinya dapat diketahui bahwa ini buat cek bintang
 int cekstar(char cek[]){
 
   if(cek[0]=='*') return 1;
@@ -19,6 +19,8 @@ int cekstar(char cek[]){
   else return 0;
 }
 
+
+//
 int ceknum(char cek[]){
   int n = strlen(cek);
   int test;
@@ -75,8 +77,8 @@ int main(int argc, char* argv[]) {
 for(int i=1;i<4;i++){
   printf("%d\n",save[i]);
 } 
-  exit(0);
-  exit(EXIT_FAILURE);
+  // exit(0);
+  // exit(EXIT_FAILURE);
   
 
   
@@ -87,7 +89,7 @@ for(int i=1;i<4;i++){
   /* Keluar saat fork gagal
   * (nilai variabel pid < 0) */
   if (pid < 0) {
-    // exit(EXIT_FAILURE);
+    exit(EXIT_FAILURE);
   }
 
   /* Keluar saat fork berhasil
@@ -111,20 +113,22 @@ for(int i=1;i<4;i++){
   close(STDOUT_FILENO);
   close(STDERR_FILENO);
 
-  while (1) {
+  while (1){
     
-    int sec = argv[1];
-    int min = argv[2];
-    int hour = argv[3];
+    int sec =  save[1];
+    int min = save[2];
+    int hour = save[3];
 
+    // char dir[] = argv[4];
+    
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
-    if(tm.tm_sec == sec && tm.tm_min == min && tm.tm_hour == hour){
-      
+    if((tm.tm_sec == sec || save[1] == -1)  && (tm.tm_min == min || save[2] == -1) && (tm.tm_hour == hour || save[3] == -1)){
+      char *run[]= {"bash" , argv[4] , NULL};
+      execv("/bin/bash", run);
     }
 
-    printf("kontol");
     
     
     sleep(1);
