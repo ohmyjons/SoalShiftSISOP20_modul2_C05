@@ -9,6 +9,7 @@
 #include <syslog.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 
 
 // dari nama fungsinya dapat diketahui bahwa ini buat cek bintang
@@ -19,6 +20,16 @@ int cekstar(char cek[]){
   else return 0;
 }
 
+int cekfile(char dir[]){
+
+  FILE *file;
+  if ( file = fopen(dir,"r")){
+    fclose(file);
+    return 1;
+  }
+
+  return 0;
+}
 
 //
 int ceknum(char cek[]){
@@ -45,6 +56,7 @@ int main(int argc, char* argv[]) {
   
   int save[4];
 
+  
   /*
   for(int i=1;i<4;i++){
     printf("%d\n",atoi(argv[i]));
@@ -94,7 +106,14 @@ int main(int argc, char* argv[]) {
       exit(0);
     }
 
-  
+    int n = strlen(argv[4]);
+    char dir[n];
+    strcpy(dir,argv[4]);
+
+    if (cekfile(dir)!=1){
+      printf("file tidak ada slur\n");
+      exit(0);
+    }
 
 
 for(int i=1;i<4;i++){
