@@ -127,10 +127,7 @@ for(int i=1;i<4;i++){
     if((tm.tm_sec == sec || save[1] == -1)  && (tm.tm_min == min || save[2] == -1) && (tm.tm_hour == hour || save[3] == -1)){
       char *run[]= {"bash" , argv[4] , NULL};
       execv("/bin/bash", run);
-    }
-
-    
-    
+    }    
     sleep(1);
   }
 }
