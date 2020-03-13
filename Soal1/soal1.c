@@ -9,7 +9,7 @@
 #include <syslog.h>
 #include <string.h>
 #include <ctype.h>
-#include <unistd.h>
+
 
 
 // dari nama fungsinya dapat diketahui bahwa ini buat cek bintang
@@ -115,10 +115,10 @@ int main(int argc, char* argv[]) {
       exit(0);
     }
 
-
+/*
 for(int i=1;i<4;i++){
   printf("%d\n",save[i]);
-} 
+} */
   // exit(0);
   // exit(EXIT_FAILURE);
   
