@@ -125,9 +125,28 @@ for(int i=1;i<4;i++){
     struct tm tm = *localtime(&t);
 
     if((tm.tm_sec == sec || save[1] == -1)  && (tm.tm_min == min || save[2] == -1) && (tm.tm_hour == hour || save[3] == -1)){
+      
+      id_t child_id;
+
+      child_id = fork();
+  
+      if (child_id < 0) {
+         exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti
+      }
+
+      if (child_id == 0) {
+        // this is child
+          
       char *run[]= {"bash" , argv[4] , NULL};
       execv("/bin/bash", run);
-    }    
+      } else {
+        // this is parent
+          
+      }
+    }
+
+    
+    
     sleep(1);
   }
 }
