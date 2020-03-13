@@ -51,7 +51,8 @@ int main(int argc, char* argv[]) {
     printf("%d\n",save[i]);
   }*/
 
-  for(int i = 1 ; i < 4 ; i++ ){
+  //untuk detik menit
+  for(int i = 1 ; i < 3 ; i++ ){
     if(cekstar(argv[i])==1){
       save[i] = -1;
     }
@@ -72,6 +73,28 @@ int main(int argc, char* argv[]) {
       break;
     }
   }
+
+  //untuk jam
+  if(cekstar(argv[3])==1){
+      save[3] = -1;
+    }
+    
+    else if(ceknum(argv[3]) == 1){
+      printf("invalid input kntl\n");
+      exit(0);
+      // exit(EXIT_FAILURE);
+    }
+
+    else if( atoi(argv[3]) >= 0 &&  atoi(argv[3])<23 ){
+      save[3] = atoi(argv[3]);
+    }
+
+    else {
+      printf("kasih yang bener cok\n");
+      exit(0);
+    }
+
+  
 
 
 for(int i=1;i<4;i++){
