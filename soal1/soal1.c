@@ -35,7 +35,6 @@ int cekfile(char dir[]){
 int ceknum(char cek[]){
   int n = strlen(cek);
   int test;
-  // printf("/%d/",n);
   for(int i=0;i<n;i++){
     if(isdigit(cek[i])){
       test = 0;
@@ -56,13 +55,6 @@ int main(int argc, char* argv[]) {
   
   int save[4];
 
-  
-  /*
-  for(int i=1;i<4;i++){
-    printf("%d\n",atoi(argv[i]));
-    printf("%d\n",save[i]);
-  }*/
-
   //untuk detik menit
   for(int i = 1 ; i < 3 ; i++ ){
     if(cekstar(argv[i])==1){
@@ -72,7 +64,6 @@ int main(int argc, char* argv[]) {
     else if(ceknum(argv[i]) == 1){
       printf("invalid input kntl\n");
       exit(0);
-      // exit(EXIT_FAILURE);
       break;
     }
 
@@ -94,7 +85,6 @@ int main(int argc, char* argv[]) {
     else if(ceknum(argv[3]) == 1){
       printf("invalid input kntl\n");
       exit(0);
-      // exit(EXIT_FAILURE);
     }
 
     else if( atoi(argv[3]) >= 0 &&  atoi(argv[3])<23 ){
@@ -114,14 +104,6 @@ int main(int argc, char* argv[]) {
       printf("file tidak ada slur\n");
       exit(0);
     }
-
-/*
-for(int i=1;i<4;i++){
-  printf("%d\n",save[i]);
-} */
-  // exit(0);
-  // exit(EXIT_FAILURE);
-  
 
   
   pid_t pid, sid;        // Variabel untuk menyimpan PID
@@ -182,7 +164,7 @@ for(int i=1;i<4;i++){
       char *run[]= {"bash" , argv[4] , NULL};
       execv("/bin/bash", run);
       } else {
-        // this is parent
+        
           
       }
     }
