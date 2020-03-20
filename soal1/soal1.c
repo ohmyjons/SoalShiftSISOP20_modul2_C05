@@ -20,6 +20,7 @@ int cekstar(char cek[]){
   else return 0;
 }
 
+//cek Directory file
 int cekfile(char dir[]){
 
   FILE *file;
@@ -31,7 +32,7 @@ int cekfile(char dir[]){
   return 0;
 }
 
-//
+//num in string
 int ceknum(char cek[]){
   int n = strlen(cek);
   int test;
@@ -43,11 +44,8 @@ int ceknum(char cek[]){
       test = 1;
       break;
     }
-    
   }
-
   return test;
-
 }
 
 
@@ -168,9 +166,6 @@ int main(int argc, char* argv[]) {
           
       }
     }
-
-    
-    
     sleep(1);
   }
 }
