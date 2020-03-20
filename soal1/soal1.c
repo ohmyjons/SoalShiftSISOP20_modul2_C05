@@ -12,7 +12,7 @@
 
 
 
-// dari nama fungsinya dapat diketahui bahwa ini buat cek bintang
+// ini buat cek bintang
 int cekstar(char cek[]){
 
   if(cek[0]=='*') return 1;
