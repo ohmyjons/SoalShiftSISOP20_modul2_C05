@@ -1,4 +1,4 @@
-># SoalShitSisop20_modul1_C05
+># SoalShitSisop20_modul2_C05
 > Penyelesaian Soal Shift Modul 2
 
 ## Nomor 1
