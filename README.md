@@ -535,78 +535,141 @@ berikut kodingan yang kita gunakan.
 namun ada kesalah dalam mengerjakan soal nomer 2 ini dimana seharusnya semua program berjalan bersama terus menerus. di program ini sudah benar sampai langkah 2b namun ketika langkah 2c program menuggu 1 file selesai dulu baru di zip dan membuat file baru lagi. ketiga program nomer 2c kita command maka program 2a-2b benar berjalan seperti sewajarnya
 ### no 3
 ```
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+#include <dirent.h>
+
+
 int main(){
     pid_t child_id;
     int status;
 
     child_id = fork();
-    
+```
+pembuatan fork pertama
+```    
     if(child_id < 0){
         exit(EXIT_FAILURE);
     }
 
-    if(child_id == 0){// child
-        // unziping the file
+    if(child_id == 0){
+        // MENGUNZIP FILE JPG
         char *arg[3] = {"unzip", "jpg.zip", NULL};
         execv("/usr/bin/unzip", arg);
     }
-
-    else {// parent
+```
+child yang pertama berguna untuk melakukan unzip file jpg.zip, pengunzipan menggunakan execv
+```
+    else {
         while ((wait(&status)) > 0);
         pid_t child_id2;
         child_id2 = fork();
+```
+pada parent, dibuat fork lagi dan menjadi fork kedua
+```        
         int status2;
         if(child_id2 == 0){
-            // membuat folder indomie
+            // MEMBUAT FOLDER INDOMIE
             char *argv[] = {"mkdir", "-p", "/home/iqbalhumam73/p2/indomie", NULL};
             execv("/bin/mkdir", argv);
         }
+```
+child ke-2 digunakan untuk membuat folder indomie, karena tidak diperbolehkan menggunakan C mkdir, maka pembuatan juga menggunakan execv
+```
         else{
             while ((wait(&status2)) > 0);
             int status3;
             pid_t child_id3;
             child_id3 = fork();
+```
+pada parent dibuat fork lagi sebagai fork ke-3
+```
             if (child_id3 == 0){
-                // membuat folder sedaap
+                // MEMBUAT FOLDER SEDAAP
                 char *argv[] = {"mkdir", "-p", "/home/iqbalhumam73/p2/sedaap", NULL};
                 execv("/bin/mkdir", argv);
             }
+```
+child ke tiga digunakan untuk membuat folder sedaap, pembuatannya juga menggu nakan execv
+```
             else{
-                while ((wait(&status3)) > 0);
-                // memindahkan 
-                struct dirent *de;  // Pointer for directory entry 
-  
-                // opendir() returns a pointer of DIR type.  
-                DIR *dr = opendir("home/iqbalhumam73/p2/jpg"); 
-  
-                if (dr == NULL){  // opendir returns NULL if couldn't open directory 
-                return 0; 
-                } 
-  
-                // Refer http://pubs.opengroup.org/onlinepubs/7990989775/xsh/readdir.html 
-                // for readdir() 
-                while ((de = readdir(dr)) != NULL) {
-                    pid_t child_id4;
-                    int status4;
-                    child_id4 = fork();
-
-                    if(child_id4 == 0){
-                        char *argv[] = {"mv", "-p", "/home/iqbalhumam73/p2/indomie", NULL};
-                        execv("/bin/mv", argv);
-                    }
+                // MEMINDAHKAN DIREKTORI KE INDOMIE, DAN FILE KE SEDAAP
+                while ((wait(&status2)) > 0);
+				struct dirent *drct;
+				DIR *dir = opendir("/home/iqbalhumam73/p2/jpg");
+```
+untuk memindahkan file dan directory yang berada pada folder jpg, kita harus menggunakan pointer dirent yang akan menunjuk entry dari folder jpg
+selanjutnya direktori jpg dibuka menggunakan opendir dan disimpan di variabel dir
+				if (dir == NULL) {	
+					return 0;
+				}
+	
+				while ((drct = readdir(dir)) != NULL) {
+					char path[100];		
+					struct stat filetype;
+					if (strcmp(drct->d_name, ".") == 0 || strcmp(drct->d_name, "..") == 0) {		
+						continue;
+					}
+```
+kemudian folder dir (jpg) dicek apakah kosong atau tidak, apabila kosong langsung di return 0.
+kemudian entry yang ditunjuk oleh drct dicek dulu apakah namanya . / .. karena pada soal tidak diperbolehkan, apabila namanya ./.. diskip
+```
                     else {
-                        while ((wait(&status4)) > 0);
-                    }
-                }
-  
-                closedir(dr);     
-                return 0;
+						strcpy(path, "/home/iqbalhumam73/p2/jpg/");
+						strcat(path, drct->d_name);
+```
+kemudian dengan string path, path dari entry disimpan dan ditambahkan nama dari entry dengan strcat untuk selanjutnya
+```
+						if (stat(path, &filetype) == 0) {
+							if (filetype.st_mode & S_IFDIR) {
+                                if (child_id3 = fork()){
+                                    child_id2 = fork();
+                                    if (child_id2==0){
+                                        char *move1[] = {"mv", path, "/home/iqbalhumam73/p2/indomie/", NULL};
+									    execv("/bin/mv", move1);
+                                    }
+```
+kemudian entry yang ditunjuk dicek menggukann ifdir, apabila iya, dipindahkan ke indomie
+```
+                                    else{
+                                        // MEMBUAT 2 FILE TXT KE DIREKTORI YANG DIPINDAHKAN KE INDOMIE
+                                        while ((wait(&status2)) > 0);
+                                        child_id = fork();
+                                        if(child_id==0){
+							                char *mktxt1[] = {"touch", "indomie/coba1.txt", NULL};
+							                execv("/bin/touch", mktxt1);
+                                        }
+                                        else{
+                                            char *mktxt2[] = {"touch", "indomie/coba2.txt", NULL};
+							                execv("/bin/touch", mktxt2);
+                                        }
+```
+selagi memindahkan, sekalian membuat 2 file coba di dir yang dipindahkan, namun masih salah dan 2 file nya tidak terbuat
+```
+                                    }
+                                }
+							}
+                            else {
+								if (child_id3 = fork() == 0) {
+									char *move2[] = {"mv", path, "/home/iqbalhumam73/p2/sedaap/", NULL};
+									execv("/bin/mv", move2);
+								} 
+							}
+						}
+					}
+				}
+```
+apabila yang ditunjuk bukan directory, maka dipindah ke sedaap
+				closedir(dir);
             }
         }
     }
 }
-```
-langkah pengerjaan nomor 3 adalah
-- membuat fork pertama, child pertama bertujuan untuk melakukan unzip dari file jpg.zip, kemudian pada proses parent dibuat fork lagi.
-- pada fork yang kedua, child proses berisi pembuatan folder indomie, dan pada parent proses membuat fork lagi
-- pada fork ketiga, child proses membuat folder sedaap dan pada parent proses melakukan pengecekan tiap entry dari folder hasil extract dan akan memindahkan isinya ke folder indomie maupun folder sedaap menggunakan dirent (directory entry). namun codingannya masih belum tepat sehingga nomor 3c masih belum bisa berjalan sesuai dengna semestinya
