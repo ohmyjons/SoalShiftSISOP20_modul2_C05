@@ -311,6 +311,25 @@ if((tm.tm_sec == sec || save[1] == -1)  && (tm.tm_min == min || save[2] == -1) &
 
 Untuk mengeksekusi file ``bash`` nya kita menggunakan ``execv`` dan dalam program daemon tersebut kita fork lagi untuk memeberi tempat atau memori untuk execv berjalan. apabila kita langsung melakukan execv tanpa melakukan fork sebelumnya maka program yang berada di bawah execv tidak akan di eksekusi , maka dari itu kita perlu tempat khusus untuk execv. Kita set ``sleep(1)`` supaya program daemon terus mengulangi proses setiap 1 detik.
 
+## Nomor 2
+### soal
+```
+Shisoppu mantappu! itulah yang selalu dikatakan Kiwa setiap hari karena sekarang dia merasa sudah jago materi sisop. Karena merasa jago, suatu hari Kiwa iseng membuat sebuah program. 
+a. Pertama-tama, Kiwa  membuat sebuah folder khusus, di dalamnya dia membuat sebuah program C yang per 30 detik membuat sebuah folder dengan nama timestamp [YYYY-mm-dd_HH:ii:ss]. 
+b. Tiap-tiap folder lalu diisi dengan 20 gambar yang di download dari https://picsum.photos/, dimana tiap gambar di download setiap 5 detik. Tiap gambar berbentuk persegi dengan ukuran (t%1000)+100 piksel dimana t adalah detik Epoch Unix. Gambar tersebut diberi nama dengan format timestamp [YYYYmm-dd_HH:ii:ss]. 
+c. Agar rapi, setelah sebuah folder telah terisi oleh 20 gambar, folder akan di zip dan folder akan di delete(sehingga hanya menyisakan .zip). 
+d. Karena takut program tersebut lepas kendali, Kiwa ingin program tersebut mengenerate sebuah program "killer" yang siap di run(executable) untuk menterminasi semua operasi program tersebut. Setelah di run, program yang menterminasi ini lalu akan mendelete dirinya sendiri. 
+e. Kiwa menambahkan bahwa program utama bisa dirun dalam dua mode, yaitu MODE_A dan MODE_B. untuk mengaktifkan MODE_A, program harus dijalankan dengan argumen -a. Untuk MODE_B, program harus dijalankan dengan argumen -b. Ketika dijalankan dalam MODE_A, program utama akan langsung menghentikan semua operasinya ketika program killer dijalankan. Untuk MODE_B, ketika program killer dijalankan, program utama akan berhenti tapi membiarkan proses di setiap folder yang masih berjalan sampai selesai(semua folder terisi gambar, terzip lalu di delete). 
+
+Kiwa lalu terbangun dan sedih karena menyadari programnya hanya sebuah mimpi. Buatlah program dalam mimpi Kiwa jadi nyata! 
+ 
+Catatan: - Tidak boleh memakai system(). 
+        - Program utama harus ter-detach dari terminal Hint: 
+        - Gunakan fitur picsum.photos untuk mendapatkan gambar dengan ukuran    tertentu 
+        - Epoch Unix bisa didapatkan dari time() 
+```
+
+
 ### no 3
 ```
 int main(){
