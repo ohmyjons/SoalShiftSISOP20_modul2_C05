@@ -314,7 +314,8 @@ Untuk mengeksekusi file ``bash`` nya kita menggunakan ``execv`` dan dalam progra
 ## Nomor 2
 ### soal
 ```
-Shisoppu mantappu! itulah yang selalu dikatakan Kiwa setiap hari karena sekarang dia merasa sudah jago materi sisop. Karena merasa jago, suatu hari Kiwa iseng membuat sebuah program. 
+Shisoppu mantappu! itulah yang selalu dikatakan Kiwa setiap hari karena sekarang dia merasa sudah jago 
+materi sisop. Karena merasa jago, suatu hari Kiwa iseng membuat sebuah program. 
 a. Pertama-tama, Kiwa  membuat sebuah folder khusus, di dalamnya dia membuat sebuah program C 
   yang per 30 detik membuat sebuah folder dengan nama timestamp [YYYY-mm-dd_HH:ii:ss]. 
 b. Tiap-tiap folder lalu diisi dengan 20 gambar yang di download dari https://picsum.photos/, 
