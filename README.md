@@ -231,7 +231,7 @@ Untuk mengatasi error yang ada dalam argumen menggunakan
       exit(0);
     }
 ```
-Fungsi yang bekerja untuk mengecek error yang ada.
+Berikut beberapa fungsi yang bekerja untuk mengecek error yang terjadi di argumen.
 ```
 // Fun buat cek bintang
 int cekstar(char cek[]){
